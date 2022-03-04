@@ -1,5 +1,21 @@
 # WiKi-Error-Extract
 
+**\*\*\*\*\* Update 2022-03-04 \*\*\*\*\***
+
+由于现在这个pipeline运行起来还是非常慢的，可以使用我抽取的结果：
+
+[下载地址+密码: c4qk](https://pan.baidu.com/s/1PovlwB9H1Zu-Jv_WN9xZnQ) 
+
+> 建议用混淆集对错误做一下过滤。
+
+同时修改了一下抽取逻辑，避免读写大量小文件。运行:
+
+```python
+python code_dir/reader/divide_xml_revisions_new.py unzipped_file_path output_file_path 0.1
+```
+
+**\*\*\*\*\* Update End \*\*\*\*\***
+
 根据wiki history数据提取纠错的平行语料。这里只提取字是1-1对齐的语料，不考虑删减字的情况。需要的话自行修改代码即可。
 
 步骤：

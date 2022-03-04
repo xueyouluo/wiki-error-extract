@@ -27,7 +27,9 @@ def extract_revisions(fname):
     revision_cnt = 0
     revison_content = []
     revison_area = False
-    for line in open(fname):
+    if isinstance(fname,str):
+      fname = open(fname)
+    for line in fname:
         if'<revision>' in line:
           # 如果revision有内容，那么肯定哪里出错了，直接丢弃数据
           if revison_content:
@@ -64,7 +66,8 @@ if __name__ == '__main__':
   output_file = args.output_dir + '/' + args.input_file
   with open(output_file,'w') as f:
       for timestamp,text in extract_revisions(input_file):
-          f.write('\n\n[Revision timestamp: ' + timestamp + ']\n\n')
-          f.write(text)
+          if len(text) > 10:
+            f.write('\n\n[Revision timestamp: ' + timestamp + ']\n\n')
+            f.write(text)
 
 

@@ -20,16 +20,17 @@ def check_output_dir(output_dir):
 
 POOL_SIZE = 9
 MAX_EDIT = 0.1
+MIN_FILESIZE = 5 # KB
 
 global_args = {
     "code_root" : '/nfs/users/xueyou/github/wiki-error-corpus',
     # "xml_dump": '/nfs/users/xueyou/data/speller/wiki/zhwiki-20211201-pages-meta-history1.xml-p2981p11534',
-    "input_dir" : '/nfs/users/xueyou/data/speller/wiki/',
-    "output_dir" : '/nfs/users/xueyou/data/speller/wiki/',
+    "input_dir" : '/data/xueyou/data/speller/wiki/',
+    "output_dir" : '/data/xueyou/data/speller/wiki/',
     'max_edit': MAX_EDIT
     }
 
-for xml_dump_file in list(glob('/nfs/users/xueyou/data/speller/wiki/*.7z')):
+for xml_dump_file in list(glob('/data/xueyou/data/speller/wiki/*.7z')):
   global_args['xml_dump'] = xml_dump_file.replace('.7z','')
 
   # Stage 1
@@ -57,6 +58,10 @@ for xml_dump_file in list(glob('/nfs/users/xueyou/data/speller/wiki/*.7z')):
 
   pool = mp.Pool(processes = POOL_SIZE)
   for fname in glob(input_dir + '/*.xml'):
+    fsize = os.path.getsize(fname) / 1024 # KB
+    if fsize < MIN_FILESIZE:
+      # print(f'small size, skip {fname}')
+      continue
     args = copy.deepcopy(global_args)
     args['input_dir'] = input_dir
     args['output_dir'] = output_dir
@@ -103,6 +108,7 @@ for xml_dump_file in list(glob('/nfs/users/xueyou/data/speller/wiki/*.7z')):
   mv {xml_dump_file} extracted
   '''
   run_bash({},cmd)
+print('all done')
 
 
 
