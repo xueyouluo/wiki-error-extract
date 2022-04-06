@@ -103,6 +103,7 @@ for xml_dump_file in list(glob('/data/xueyou/data/speller/wiki/*.7z')):
   # Stage 6
   # clear 
   print('clear tmp files')
+  check_output_dir('./extracted')
   cmd = f'''rm {global_args['xml_dump']}
   rm -rf stage1 stage3 stage4
   mv {xml_dump_file} extracted
